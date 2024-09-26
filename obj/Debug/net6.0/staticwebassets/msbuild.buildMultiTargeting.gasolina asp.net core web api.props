@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/gasolina asp.net core web api.props" />
+</Project>
