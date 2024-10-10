@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "DXN4iHy/3G0ZVLwZPCr47vp2Tq1hoD6cb/dwAzehLxO353Fwwh35pv0lmvKi6Iuv1BKoMlcMDDyugmjP01mUgw==",
+  "dgSpecHash": "UlvwPgm5PHH8Nmzh2VTO8SrsZ0Vu4OK8NSNbQBJGvN/13X/KMJYEQk/P2m99Wq7kXiP2gRVW4MpajB89AcZRlw==",
   "success": true,
-  "projectFilePath": "/Users/samir/gasolina-coreweb-api/gasolina asp.net core web api.csproj",
+  "projectFilePath": "/Users/samir/Documents/GitHub/gasolina-coreweb-api/gasolina asp.net core web api.csproj",
   "expectedPackageFiles": [
     "/Users/samir/.nuget/packages/humanizer.core/2.8.26/humanizer.core.2.8.26.nupkg.sha512",
     "/Users/samir/.nuget/packages/microsoft.csharp/4.5.0/microsoft.csharp.4.5.0.nupkg.sha512",

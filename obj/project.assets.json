@@ -2403,11 +2403,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/samir/gasolina-coreweb-api/gasolina asp.net core web api.csproj",
+      "projectUniqueName": "/Users/samir/Documents/GitHub/gasolina-coreweb-api/gasolina asp.net core web api.csproj",
       "projectName": "gasolina asp.net core web api",
-      "projectPath": "/Users/samir/gasolina-coreweb-api/gasolina asp.net core web api.csproj",
+      "projectPath": "/Users/samir/Documents/GitHub/gasolina-coreweb-api/gasolina asp.net core web api.csproj",
       "packagesPath": "/Users/samir/.nuget/packages/",
-      "outputPath": "/Users/samir/gasolina-coreweb-api/obj/",
+      "outputPath": "/Users/samir/Documents/GitHub/gasolina-coreweb-api/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/samir/.nuget/NuGet/NuGet.Config"

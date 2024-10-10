@@ -1,29 +1,32 @@
+using gasolina_asp.net_core_web_api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using gasolina_asp.net_core_web_api.Data;
 
-[Route("api/[controller]")]
+
 [ApiController]
+[Route("api/[controller]")]
 public class CarsController : ControllerBase
 {
-    private readonly FuelAssignmentContext _context;
+    private readonly FuelDBContext _context;
 
-    public CarsController(FuelAssignmentContext context)
+    public CarsController(FuelDBContext context)
     {
         _context = context;
     }
 
     // GET: api/Cars
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Fuel_Cars>>> GetCars()
+    public async Task<ActionResult<IEnumerable<Car>>> GetCars()
     {
         return await _context.Cars.ToListAsync();
     }
 
     // GET: api/Cars/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<Fuel_Cars>> GetCar(int id)
+    public async Task<ActionResult<Car>> GetCar(int id)
     {
         var car = await _context.Cars.FindAsync(id);
 
@@ -37,19 +40,19 @@ public class CarsController : ControllerBase
 
     // POST: api/Cars
     [HttpPost]
-    public async Task<ActionResult<Fuel_Cars>> PostCar(Fuel_Cars car)
+    public async Task<ActionResult<Car>> PostCar(Car car)
     {
         _context.Cars.Add(car);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(GetCar), new { id = car.VehicleId }, car);
+        return CreatedAtAction(nameof(GetCar), new { id = car.VehiclesId }, car);
     }
 
     // PUT: api/Cars/5
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutCar(int id, Fuel_Cars car)
+    public async Task<IActionResult> PutCar(int id, Car car)
     {
-        if (id != car.VehicleId)
+        if (id != car.VehiclesId)
         {
             return BadRequest();
         }
@@ -93,6 +96,6 @@ public class CarsController : ControllerBase
 
     private bool CarExists(int id)
     {
-        return _context.Cars.Any(e => e.VehicleId == id);
+        return _context.Cars.Any(e => e.VehiclesId == id);
     }
 }

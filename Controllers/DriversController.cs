@@ -1,31 +1,34 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using gasolina_asp.net_core_web_api.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using gasolina_asp.net_core_web_api.Data;
 
-[Route("api/[controller]")]
+
 [ApiController]
+[Route("api/[controller]")]
 public class DriversController : ControllerBase
 {
-    private readonly FuelAssignmentContext _context;
+    private readonly FuelDBContext _context;
 
-    public DriversController(FuelAssignmentContext context)
+    public DriversController(FuelDBContext context)
     {
         _context = context;
     }
 
     // GET: api/Drivers
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Fuel_Drivers>>> GetDrivers()
+    public async Task<ActionResult<IEnumerable<Driver>>> GetDrivers()
     {
         return await _context.Drivers.ToListAsync();
     }
 
     // GET: api/Drivers/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<Fuel_Drivers>> GetDriver(int id)
+    public async Task<ActionResult<Driver>> GetDriver(int id)
     {
-        var driver = await _context.Drivers.FindAsync(id);
+        var driver = await _context.Drivers.FindAsync(id.ToString());
 
         if (driver == null)
         {
@@ -37,19 +40,19 @@ public class DriversController : ControllerBase
 
     // POST: api/Drivers
     [HttpPost]
-    public async Task<ActionResult<Fuel_Drivers>> PostDriver(Fuel_Drivers driver)
+    public async Task<ActionResult<Driver>> PostDriver(Driver driver)
     {
         _context.Drivers.Add(driver);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(GetDriver), new { id = driver.EmployeeNumber }, driver);
+        return CreatedAtAction(nameof(GetDriver), new { id = driver.Identification }, driver);
     }
 
     // PUT: api/Drivers/5
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutDriver(int id, Fuel_Drivers driver)
+    public async Task<IActionResult> PutDriver(int id, Driver driver)
     {
-        if (id != driver.EmployeeNumber)
+        if (id.ToString() != driver.Identification)
         {
             return BadRequest();
         }
@@ -79,7 +82,7 @@ public class DriversController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteDriver(int id)
     {
-        var driver = await _context.Drivers.FindAsync(id);
+        var driver = await _context.Drivers.FindAsync(id.ToString());
         if (driver == null)
         {
             return NotFound();
@@ -93,6 +96,6 @@ public class DriversController : ControllerBase
 
     private bool DriverExists(int id)
     {
-        return _context.Drivers.Any(e => e.EmployeeNumber == id);
+        return _context.Drivers.Any(e => e.Identification == id.ToString());
     }
 }
