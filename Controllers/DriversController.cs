@@ -17,14 +17,12 @@ public class DriversController : ControllerBase
         _context = context;
     }
 
-    // GET: api/Drivers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Driver>>> GetDrivers()
     {
         return await _context.Drivers.ToListAsync();
     }
 
-    // GET: api/Drivers/5
     [HttpGet("{id}")]
     public async Task<ActionResult<Driver>> GetDriver(int id)
     {
@@ -38,7 +36,6 @@ public class DriversController : ControllerBase
         return driver;
     }
 
-    // POST: api/Drivers
     [HttpPost]
     public async Task<ActionResult<Driver>> PostDriver(Driver driver)
     {
@@ -48,7 +45,6 @@ public class DriversController : ControllerBase
         return CreatedAtAction(nameof(GetDriver), new { id = driver.Identification }, driver);
     }
 
-    // PUT: api/Drivers/5
     [HttpPut("{id}")]
     public async Task<IActionResult> PutDriver(int id, Driver driver)
     {
@@ -78,7 +74,6 @@ public class DriversController : ControllerBase
         return NoContent();
     }
 
-    // DELETE: api/Drivers/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteDriver(int id)
     {

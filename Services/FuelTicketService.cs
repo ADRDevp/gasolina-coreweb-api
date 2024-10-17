@@ -13,35 +13,45 @@ public class FuelTicketService
         _context = context;
     }
 
-    // SP para obtener todos los FuelTickets
     public async Task<List<FuelTicket>> GetAllFuelTickets()
     {
-        return await _context.FuelTickets
-            .FromSqlRaw("EXEC dbo.sp_GetAllFuelTicket")
-            .ToListAsync();
+        return await _context.FuelTickets.ToListAsync();
     }
 
-    // SP para obtener una asignación por ID
-    public async Task<AssignmentFuel?> GetAssignment(int id)
+    public async Task<FuelTicket?> GetFuelTicketById(decimal id)
     {
-        var assignmentFuel = await _context.AssignmentFuels
-            .FromSqlRaw("EXEC dbo.sp_GetAssignment @p0", id)
-            .FirstOrDefaultAsync();
+        return await _context.FuelTickets.FindAsync(id);
+    }
 
-        if (assignmentFuel == null)
+    public async Task CreateFuelTicket(FuelTicket fuelTicket)
+    {
+        _context.FuelTickets.Add(fuelTicket);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task<bool> UpdateFuelTicket(decimal id, FuelTicket fuelTicket)
+    {
+        var existingTicket = await _context.FuelTickets.FindAsync(id);
+        if (existingTicket == null)
         {
-            // Manejar el caso donde no se encuentra la asignación
-            return null;  // Puedes manejar este caso como prefieras
+            return false;
         }
 
-        return assignmentFuel;
+        _context.Entry(existingTicket).CurrentValues.SetValues(fuelTicket);
+        await _context.SaveChangesAsync();
+        return true;
     }
 
-    // SP para insertar o actualizar un FuelTicket
-    public async Task SetFuelTicket(int ticketId, string someField, string otherField)
+    public async Task<bool> DeleteFuelTicket(decimal id)
     {
-        await _context.Database.ExecuteSqlRawAsync(
-            "EXEC dbo.sp_SetFuelTicket @p0, @p1, @p2", 
-            ticketId, someField, otherField);
+        var ticket = await _context.FuelTickets.FindAsync(id);
+        if (ticket == null)
+        {
+            return false;
+        }
+
+        _context.FuelTickets.Remove(ticket);
+        await _context.SaveChangesAsync();
+        return true;
     }
 }

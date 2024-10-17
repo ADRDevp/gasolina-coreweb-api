@@ -17,14 +17,12 @@ public class CarsController : ControllerBase
         _context = context;
     }
 
-    // GET: api/Cars
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Car>>> GetCars()
     {
         return await _context.Cars.ToListAsync();
     }
 
-    // GET: api/Cars/5
     [HttpGet("{id}")]
     public async Task<ActionResult<Car>> GetCar(int id)
     {
@@ -38,7 +36,6 @@ public class CarsController : ControllerBase
         return car;
     }
 
-    // POST: api/Cars
     [HttpPost]
     public async Task<ActionResult<Car>> PostCar(Car car)
     {
@@ -48,7 +45,6 @@ public class CarsController : ControllerBase
         return CreatedAtAction(nameof(GetCar), new { id = car.VehiclesId }, car);
     }
 
-    // PUT: api/Cars/5
     [HttpPut("{id}")]
     public async Task<IActionResult> PutCar(int id, Car car)
     {
@@ -78,7 +74,6 @@ public class CarsController : ControllerBase
         return NoContent();
     }
 
-    // DELETE: api/Cars/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteCar(int id)
     {

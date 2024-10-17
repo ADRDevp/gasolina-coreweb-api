@@ -9,61 +9,69 @@ using gasolina_asp.net_core_web_api.Data;
 [Route("api/[controller]")]
 public class DetailTicketController : ControllerBase
 {
-    private readonly FuelDBContext _context;
+    private readonly DetailTicketService _detailTicketService;
 
-    public DetailTicketController(FuelDBContext context)
+    public DetailTicketController(DetailTicketService detailTicketService)
     {
-        _context = context;
+        _detailTicketService = detailTicketService;
     }
 
-    // PUT: api/DetailTicket/5
+    // GET: api/DetailTicket
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<DetailTicket>>> GetAllDetailTickets()
+    {
+        var tickets = await _detailTicketService.GetAllDetailTickets();
+        return Ok(tickets);
+    }
+
+    // GET: api/DetailTicket/{id}
+    [HttpGet("{id}")]
+    public async Task<ActionResult<DetailTicket>> GetDetailTicketById(decimal id)
+    {
+        var ticket = await _detailTicketService.GetDetailTicketById(id);
+        if (ticket == null)
+        {
+            return NotFound();
+        }
+        return Ok(ticket);
+    }
+
+    // POST: api/DetailTicket
+    [HttpPost]
+    public async Task<ActionResult<DetailTicket>> CreateDetailTicket(DetailTicket detailTicket)
+    {
+        await _detailTicketService.CreateDetailTicket(detailTicket);
+        return CreatedAtAction(nameof(GetDetailTicketById), new { id = detailTicket.DetailId }, detailTicket);
+    }
+
+    // PUT: api/DetailTicket/{id}
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutDetailTicket(int id, DetailTicket detailTicket)
+    public async Task<IActionResult> UpdateDetailTicket(decimal id, DetailTicket detailTicket)
     {
         if (id != detailTicket.DetailId)
         {
             return BadRequest();
         }
 
-        _context.Entry(detailTicket).State = EntityState.Modified;
-
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!DetailTicketExists(id))
-            {
-                return NotFound();
-            }
-            else
-            {
-                throw;
-            }
-        }
-
-        return NoContent();
-    }
-
-    // DELETE: api/DetailTicket/5
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteDetailTicket(int id)
-    {
-        var detailTicket = await _context.DetailTickets.FindAsync(id);
-        if (detailTicket == null)
+        var updated = await _detailTicketService.UpdateDetailTicket(id, detailTicket);
+        if (!updated)
         {
             return NotFound();
         }
 
-        _context.DetailTickets.Remove(detailTicket);
-        await _context.SaveChangesAsync();
-
         return NoContent();
     }
 
-    private bool DetailTicketExists(int id)
+    // DELETE: api/DetailTicket/{id}
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteDetailTicket(decimal id)
     {
-        return _context.DetailTickets.Any(e => e.DetailId == id);
+        var deleted = await _detailTicketService.DeleteDetailTicket(id);
+        if (!deleted)
+        {
+            return NotFound();
+        }
+
+        return NoContent();
     }
 }

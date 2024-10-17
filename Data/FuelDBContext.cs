@@ -17,7 +17,6 @@ namespace gasolina_asp.net_core_web_api.Data
         {
         }
 
-        // DbSets para las tablas de la base de datos
         public virtual DbSet<AssignmentFuel> AssignmentFuels { get; set; } = null!;
         public virtual DbSet<Brand> Brands { get; set; } = null!;
         public virtual DbSet<Car> Cars { get; set; } = null!;
@@ -49,7 +48,7 @@ namespace gasolina_asp.net_core_web_api.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configuración de AssignmentFuel
+
             modelBuilder.Entity<AssignmentFuel>(entity =>
             {
                 entity.HasKey(e => e.EmployeeNumber)
@@ -64,7 +63,6 @@ namespace gasolina_asp.net_core_web_api.Data
                 entity.Property(e => e.Positions).HasMaxLength(60).IsUnicode(false);
             });
 
-            // Configuración de otras tablas
 
             modelBuilder.Entity<Brand>(entity =>
             {
@@ -106,10 +104,10 @@ namespace gasolina_asp.net_core_web_api.Data
                     .HasConstraintName("FK_DetailTicket_FuelTickets");
             });
 
-            // Configuración de DeliveryTicket
+            
             modelBuilder.Entity<DeliveryTicket>(entity =>
             {
-                entity.HasKey(e => e.DeliveryId);  // Definir la clave primaria
+                entity.HasKey(e => e.DeliveryId); 
                 entity.ToTable("DeliveryTicket", "Fuel");
 
                 entity.Property(e => e.DeliveryId).HasColumnType("numeric(18, 0)");
@@ -130,10 +128,9 @@ namespace gasolina_asp.net_core_web_api.Data
                     .HasConstraintName("FK_DeliveryTicket_Cars");
             });
 
-            // Configuración de FuelPrice
             modelBuilder.Entity<FuelPrice>(entity =>
             {
-                entity.HasKey(e => e.RegisterId); // Definir la clave primaria
+                entity.HasKey(e => e.RegisterId); 
                 entity.ToTable("FuelPrice", "Fuel");
 
                 entity.Property(e => e.RegisterId).ValueGeneratedNever();
@@ -141,10 +138,10 @@ namespace gasolina_asp.net_core_web_api.Data
                 entity.Property(e => e.Type).HasMaxLength(30).IsUnicode(false);
             });
 
-            // Configuración de ParametersControl
+        
             modelBuilder.Entity<ParametersControl>(entity =>
             {
-                entity.HasNoKey(); // Sin clave primaria
+                entity.HasNoKey(); 
                 entity.ToTable("ParametersControl", "Core");
 
                 entity.Property(e => e.Ccode)
@@ -153,23 +150,22 @@ namespace gasolina_asp.net_core_web_api.Data
                     .HasColumnName("CCode");
             });
 
-            // Configuración de Driver
+       
             modelBuilder.Entity<Driver>(entity =>
             {
-                entity.HasKey(e => e.EmployeeNumber); // Clave primaria definida
+                entity.HasKey(e => e.EmployeeNumber); 
                 entity.ToTable("Drivers", "Fuel");
             });
 
-            // Configuración de ViewAssingmentTicket (Sin clave)
+           
             modelBuilder.Entity<ViewAssingmentTicket>(entity =>
             {
-                entity.HasNoKey();  // Indica que esta entidad no tiene clave
+                entity.HasNoKey(); 
                 entity.ToView("View_AssingmentTicket", "Fuel");
                 entity.Property(e => e.BarCode).HasMaxLength(20).IsUnicode(false);
                 entity.Property(e => e.CreationDate).HasColumnType("datetime");
             });
 
-            // Configuración de otras vistas sin clave
             modelBuilder.Entity<ViewCancelTicket>(entity =>
             {
                 entity.HasNoKey();

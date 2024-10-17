@@ -12,7 +12,6 @@ public class EmployeeController : ControllerBase
         _employeeService = employeeService;
     }
 
-    // POST: api/Employees
     [HttpPost]
     public async Task<IActionResult> SetEmployee(int employeeId, string employeeName)
     {

@@ -16,14 +16,12 @@ public class DeliveryTicketController : ControllerBase
         _context = context;
     }
 
-    // GET: api/DeliveryTicket
     [HttpGet]
     public async Task<ActionResult<IEnumerable<DeliveryTicket>>> GetDeliveryTickets()
     {
         return await _context.DeliveryTickets.ToListAsync();
     }
 
-    // GET: api/DeliveryTicket/5
     [HttpGet("{id}")]
     public async Task<ActionResult<DeliveryTicket>> GetDeliveryTicket(int id)
     {
@@ -37,7 +35,6 @@ public class DeliveryTicketController : ControllerBase
         return deliveryTicket;
     }
 
-    // POST: api/DeliveryTicket
     [HttpPost]
     public async Task<ActionResult<DeliveryTicket>> PostDeliveryTicket(DeliveryTicket deliveryTicket)
     {
@@ -47,7 +44,6 @@ public class DeliveryTicketController : ControllerBase
         return CreatedAtAction(nameof(GetDeliveryTicket), new { id = deliveryTicket.DeliveryId }, deliveryTicket);
     }
 
-    // PUT: api/DeliveryTicket/5
     [HttpPut("{id}")]
     public async Task<IActionResult> PutDeliveryTicket(int id, DeliveryTicket deliveryTicket)
     {
@@ -77,7 +73,6 @@ public class DeliveryTicketController : ControllerBase
         return NoContent();
     }
 
-    // DELETE: api/DeliveryTicket/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteDeliveryTicket(int id)
     {
