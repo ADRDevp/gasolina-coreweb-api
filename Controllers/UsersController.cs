@@ -14,7 +14,6 @@ public class UsersController : ControllerBase
         _userService = userService;
     }
 
-    // GET: api/Users
     [HttpGet]
     public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
     {
@@ -22,7 +21,6 @@ public class UsersController : ControllerBase
         return Ok(users);
     }
 
-    // GET: api/Users/{id}
     [HttpGet("{id}")]
     public async Task<ActionResult<User>> GetUserById(int id)
     {
@@ -34,7 +32,6 @@ public class UsersController : ControllerBase
         return Ok(user);
     }
 
-    // POST: api/Users
     [HttpPost]
     public async Task<IActionResult> CreateUser(User user)
     {
@@ -42,7 +39,6 @@ public class UsersController : ControllerBase
         return CreatedAtAction(nameof(GetUserById), new { id = user.UserId }, user);
     }
 
-    // PUT: api/Users/{id}
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateUser(int id, User user)
     {
@@ -60,7 +56,6 @@ public class UsersController : ControllerBase
         return NoContent();
     }
 
-    // DELETE: api/Users/{id}
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteUser(int id)
     {
@@ -71,5 +66,16 @@ public class UsersController : ControllerBase
         }
 
         return NoContent();
+    }
+
+    [HttpPost("ValidateUser")]
+    public async Task<IActionResult> ValidateUser(string userName, string password)
+    {
+        bool isValid = await _userService.ValidateUser(userName, password);
+        if (isValid)
+        {
+            return Ok("User is valid.");
+        }
+        return Unauthorized("Invalid credentials.");
     }
 }

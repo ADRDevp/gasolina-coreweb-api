@@ -13,7 +13,6 @@ public class EmployeeService
         _context = context;
     }
 
-    // SP para insertar o actualizar empleados
     public async Task SetEmployee(int employeeId, string employeeName)
     {
         await _context.Database.ExecuteSqlRawAsync(

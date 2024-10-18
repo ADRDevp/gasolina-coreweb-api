@@ -13,36 +13,31 @@ public class AssignmentFuelService
         _context = context;
     }
 
-    // Método para obtener todas las asignaciones de combustible
     public async Task<List<AssignmentFuel>> GetAllAssignments()
     {
         return await _context.AssignmentFuels.ToListAsync();
     }
 
-    // Método para obtener una asignación de combustible por ID
     public async Task<AssignmentFuel> GetAssignmentById(int id)
     {
         return await _context.AssignmentFuels.FindAsync(id);
     }
 
-    // Método para crear una nueva asignación de combustible
     public async Task CreateAssignment(AssignmentFuel assignmentFuel)
     {
         _context.AssignmentFuels.Add(assignmentFuel);
         await _context.SaveChangesAsync();
     }
 
-    // Método para actualizar una asignación de combustible existente
     public async Task<bool> UpdateAssignment(int id, AssignmentFuel assignmentFuel)
     {
         var existingAssignment = await _context.AssignmentFuels.FindAsync(id);
 
         if (existingAssignment == null)
         {
-            return false; // No se encontró la asignación
+            return false;
         }
 
-        // Actualizar propiedades de la asignación
         existingAssignment.EmployeeNumber = assignmentFuel.EmployeeNumber;
         existingAssignment.Identification = assignmentFuel.Identification;
         existingAssignment.FullName = assignmentFuel.FullName;
@@ -58,13 +53,12 @@ public class AssignmentFuelService
         return true;
     }
 
-    // Método para eliminar una asignación de combustible por ID
     public async Task<bool> DeleteAssignment(int id)
     {
         var assignmentFuel = await _context.AssignmentFuels.FindAsync(id);
         if (assignmentFuel == null)
         {
-            return false; // No se encontró la asignación
+            return false; 
         }
 
         _context.AssignmentFuels.Remove(assignmentFuel);

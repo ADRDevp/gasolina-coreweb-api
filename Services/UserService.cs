@@ -13,36 +13,31 @@ public class UserService
         _context = context;
     }
 
-    // Método para obtener todos los usuarios
     public async Task<List<User>> GetAllUsers()
     {
         return await _context.Users.ToListAsync();
     }
 
-    // Método para obtener un usuario por ID
     public async Task<User> GetUserById(int id)
     {
         return await _context.Users.FindAsync(id);
     }
 
-    // Método para crear un nuevo usuario
     public async Task CreateUser(User user)
     {
         _context.Users.Add(user);
         await _context.SaveChangesAsync();
     }
 
-    // Método para actualizar un usuario existente
     public async Task<bool> UpdateUser(int id, User user)
     {
         var existingUser = await _context.Users.FindAsync(id);
 
         if (existingUser == null)
         {
-            return false; // No se encontró el usuario
+            return false; 
         }
 
-        // Actualizar propiedades del usuario
         existingUser.UserName = user.UserName;
         existingUser.Password = user.Password;
         existingUser.TypeUser = user.TypeUser;
@@ -53,17 +48,25 @@ public class UserService
         return true;
     }
 
-    // Método para eliminar un usuario por ID
     public async Task<bool> DeleteUser(int id)
     {
         var user = await _context.Users.FindAsync(id);
         if (user == null)
         {
-            return false; // No se encontró el usuario
+            return false;
         }
 
         _context.Users.Remove(user);
         await _context.SaveChangesAsync();
         return true;
+    }
+
+    public async Task<bool> ValidateUser(string userName, string password)
+    {
+        var result = await _context.Users
+            .FromSqlRaw("EXEC dbo.sp_ValidUser @UserName = {0}, @Password = {1}", userName, password)
+            .ToListAsync();
+
+        return result.Count > 0;
     }
 }

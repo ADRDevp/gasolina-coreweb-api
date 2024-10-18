@@ -13,13 +13,11 @@ public class DepartmentService
         _context = context;
     }
 
-    // Obtener todos los departamentos
     public async Task<List<Department>> GetAllDepartments()
     {
         return await _context.Departments.ToListAsync();
     }
 
-    // Obtener un departamento por ID
     public async Task<Department> GetDepartmentById(int id)
     {
         return await _context.Departments.FindAsync(id);
